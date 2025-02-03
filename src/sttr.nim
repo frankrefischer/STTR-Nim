@@ -1,4 +1,5 @@
 import std/random
+import std/terminal
 
 type
   StardateRange = range[2000..3900]
@@ -13,4 +14,7 @@ proc newStardate(): Stardate =
 when isMainModule:
   randomize()
   let stardate = newStardate()
-  echo("Stardate: ", stardate.current)
+  if isatty(stdout):
+    styledEcho(fgBlue, "Stardate: ", fgGreen, $stardate.current)
+  else:
+    echo("Stardate: ", stardate.current)
