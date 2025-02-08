@@ -1,20 +1,28 @@
+#import std/options
 import std/random
 import std/terminal
+#import colors
+#import std/macros
+#import std/syncio
+#import std/sugar
 
 type
-  StardateRange = range[2000..3900]
-  Stardate = object
-    current: StardateRange
-    start: StardateRange
-
-proc newStardate(): Stardate =
-  let start = rand(StardateRange)
-  Stardate(current: start, start: start)
+  Stardate = range[2000..3900]
+  Game = object
+    start_stardate: Stardate
+    current_stardate: Stardate
+    remaining_stardates: range[1..100]
 
 when isMainModule:
   randomize()
-  let stardate = newStardate()
-  if isatty(stdout):
-    styledEcho(fgBlue, "Stardate: ", fgGreen, $stardate.current)
-  else:
-    echo("Stardate: ", stardate.current)
+  let stardate = rand(Stardate)
+  let game = Game(start_stardate: stardate,
+                  current_stardate: stardate,
+                  remaining_stardates: 30)
+
+  styledEcho fgBlue,  "Game started at star date: ",
+             fgDefault, $game.start_stardate
+  styledEcho fgGreen, "        Current star date: ",
+             fgDefault, $game.start_stardate
+  styledEcho fgGreen, "     Remaining star dates: ",
+             fgDefault, $game.remaining_stardates
