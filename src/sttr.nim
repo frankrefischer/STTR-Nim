@@ -1,28 +1,24 @@
-#import std/options
-import std/random
 import std/terminal
-#import colors
-#import std/macros
-#import std/syncio
-#import std/sugar
+import times
+from stardate import nil
+from enterprise import nil
 
-type
-  Stardate = range[2000..3900]
-  Game = object
-    start_stardate: Stardate
-    current_stardate: Stardate
-    remaining_stardates: range[1..100]
+let start_time = now()
 
 when isMainModule:
-  randomize()
-  let stardate = rand(Stardate)
-  let game = Game(start_stardate: stardate,
-                  current_stardate: stardate,
-                  remaining_stardates: 30)
-
+  styledEcho fgBlue,  "               Start time: ",
+             fgDefault, $start_time
   styledEcho fgBlue,  "Game started at star date: ",
-             fgDefault, $game.start_stardate
+             fgDefault, $stardate.start
   styledEcho fgGreen, "        Current star date: ",
-             fgDefault, $game.start_stardate
+             fgDefault, $stardate.current
   styledEcho fgGreen, "     Remaining star dates: ",
-             fgDefault, $game.remaining_stardates
+             fgDefault, $stardate.remaining
+  styledEcho fgGreen, "                   Energy: ",
+             fgDefault, $enterprise.energy, " of ", $high(enterprise.Energy)
+  styledEcho fgGreen, "         Photon Torpedoes: ",
+             fgDefault, $enterprise.photon_torpedoes, " of ", $high(enterprise.Photon_Torpedoes)
+  styledEcho fgGreen, "                 Quadrant: ",
+             fgDefault, $enterprise.quadrant
+  styledEcho fgGreen, "                   Sector: ",
+             fgDefault, $enterprise.sector
